@@ -1,0 +1,10 @@
+node_modules
+voice-web
+dist
+.cache
+.env
+docker-compose.prod.yml
+.ignored_files
+.vscode
+.DS_Store
+coverage
