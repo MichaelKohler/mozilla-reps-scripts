@@ -21,13 +21,17 @@ try {
   process.exit(1);
 }
 
-console.log(`${reps.length} Reps in total`);
-
 const mentors = reps.filter((rep) => rep.groups.some((groupInfo) => groupInfo.name === 'Mentor'));
 console.log(`${mentors.length} Mentors in total`);
+const mentorsCountedByJoinYear = mentors.reduce(getStatsByYear, {});
+console.table(mentorsCountedByJoinYear);
 
-const countedByJoinYear = mentors.reduce((yearStats, mentor) => {
-  const joinDate = new Date(mentor.date_joined_program);
+console.log(`${reps.length} Reps in total`);
+const repsCountedByJoinYear = reps.reduce(getStatsByYear, {});
+console.table(repsCountedByJoinYear);
+
+function getStatsByYear(yearStats, rep) {
+  const joinDate = new Date(rep.date_joined_program);
   const joinYear = joinDate.getFullYear();
 
   if (typeof yearStats[joinYear] === 'undefined') {
@@ -37,6 +41,4 @@ const countedByJoinYear = mentors.reduce((yearStats, mentor) => {
   yearStats[joinYear] += 1;
 
   return yearStats;
-}, {});
-
-console.table(countedByJoinYear);
+}
